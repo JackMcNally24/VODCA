@@ -39,6 +39,22 @@ public class AnimatorModelImpl implements AnimatorModel {
     this.build = "";
   }
 
+  private void verifyMotions() throws IllegalArgumentException {
+    for (Motion motion : motions) {
+      boolean continuous = false;
+      if (motion.getTimeFrame().getX() != 0) {
+        for (Motion m : this.motions) {
+          if (motion.getTimeFrame().getX() == m.getTimeFrame().getY()) {
+            continuous = true;
+          }
+        }
+        if (!continuous) {
+          throw new IllegalArgumentException("There cannot be gaps in your timeline!");
+        }
+      }
+    }
+  }
+
   @Override
   public void addShape(IShape shape) {
     this.shapes.add(shape);
@@ -46,11 +62,24 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   @Override
   public void addMotion(Motion motion) {
+    boolean continuous = false;
+    if (motion.getTimeFrame().getX() != 0) {
+      for (Motion m : this.motions) {
+        if (motion.getTimeFrame().getX() == m.getTimeFrame().getY()) {
+          continuous = true;
+        }
+      }
+      if (!continuous) {
+        throw new IllegalArgumentException("There cannot be gaps in your timeline!");
+      }
+    }
     this.motions.add(motion);
   }
 
   @Override
   public void applyMotions() {
+    //verifies that all of the motions have no gaps
+    verifyMotions();
     for (Motion motion : motions) {
       boolean exists = false;
       for (IShape shape : shapes) {
@@ -68,10 +97,10 @@ public class AnimatorModelImpl implements AnimatorModel {
   private void applyMotion(Motion motion, IShape shape) {
     this.build = build + "shape id: " + shape.getId() + '\n';
     this.build = build + "motion shape id: " + shape.getId() + " " +
-                    Math.round(motion.getTimeFrame().getX()) + " "
+            Math.round(motion.getTimeFrame().getX()) + " "
             + Math.round(shape.getPosition().getX()) + " " + Math.round(shape.getPosition().getY())
-                    + " " + Math.round(shape.getSize().getX()) + " " +
-                    Math.round(shape.getSize().getY()) + " " + shape.getColor().getRed()
+            + " " + Math.round(shape.getSize().getX()) + " " +
+            Math.round(shape.getSize().getY()) + " " + shape.getColor().getRed()
             + " " + shape.getColor().getGreen() + " " + shape.getColor().getBlue() + "   ";
     float ticks = motion.getTimeFrame().getY() - motion.getTimeFrame().getX();
     float mX = (motion.getNewPosition().getX() - shape.getPosition().getX()) / ticks;
