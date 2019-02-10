@@ -1,1 +1,1 @@
-
+JAR file unfortunately not able to work in time, run the program in intellij or figure it out, ignore the commits made months ago, I do not know why those are there and did not have time to figure it out
