@@ -105,20 +105,17 @@ public class AltView extends JFrame implements IView, ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getActionCommand().equals("calculate")) {
-      try {
+      System.out.println(ticker.getText());
         eight.get(ticker.getText()).add(Double.parseDouble(growthDiscount.getText()));
         eight.get(ticker.getText()).add(Double.parseDouble(discountRate.getText()));
         eight.get(ticker.getText()).add(Double.parseDouble(peValue.getText()));
         eightPanel.setTicker(ticker.getText());
         eightPanel.setEight(this.eight);
-      } catch (Exception ex) {
-        System.out.println("Please enter all values");
-      }
-      ticker.setText("");
-      growthDiscount.setText("");
-      discountRate.setText("");
-      peValue.setText("");
-      refresh();
+        ticker.setText("");
+        growthDiscount.setText("");
+        discountRate.setText("");
+        peValue.setText("");
+        refresh();
     }
     else if (e.getActionCommand().equals("switch")) {
       IView main = new MainView();

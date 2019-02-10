@@ -55,13 +55,13 @@ public class EightPanel extends JPanel {
       double valuation = eightInputs(dubs.get(0), dubs.get(1), dubs.get(2), dubs.get(3), dubs.get(4), dubs.get(5),
               dubs.get(6), dubs.get(7));
       g.setColor(Color.WHITE);
-      g.drawString(ticker, 300, 0);
+      g.drawString(ticker, 250, 100);
       if (valuation >= 0) {
         g.setColor(Color.GREEN);
       } else {
         g.setColor(Color.RED);
       }
-      g.drawString(Double.toString(valuation), 400, 0);
+      g.drawString(Double.toString(valuation), 300, 100);
     }
   }
 }
